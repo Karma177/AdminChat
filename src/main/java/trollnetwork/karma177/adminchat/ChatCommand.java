@@ -59,7 +59,13 @@ public class ChatCommand implements SimpleCommand {
                 }
                 else quickMessage(source, args); // /a <messaggio>
             }
-            default -> quickMessage(source, args); // /a <messaggio>
+            default -> {
+                if(invocation.alias().equalsIgnoreCase("adminchat")){
+                    source.sendMessage(Component.text("Uso: /adminchat <enable | disable | toggle>", NamedTextColor.RED));
+                    return;
+                }
+                quickMessage(source, args); // /a <messaggio
+            }
         }
     }
 
