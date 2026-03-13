@@ -4,6 +4,7 @@ import com.velocitypowered.api.command.SimpleCommand;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import java.util.List;
+import java.util.Map;
 
 public class StaffListCommand implements SimpleCommand {
 
@@ -24,18 +25,26 @@ public class StaffListCommand implements SimpleCommand {
             return;
         }
 
-        List<String> onlineStaff = chatManager.getOnlineStaffNames();
+        Map<String, List<String>> groupedStaff = chatManager.getStaffGroupedByServer();
 
-        if (onlineStaff.isEmpty()) {
+        if (groupedStaff.isEmpty()) {
             invocation.source().sendMessage(toComponent(Messages.get("stafflist.none")));
         } else {
-            String staffNames = String.join(", ", onlineStaff);
-            String header = Messages.get("stafflist.header").replace("{count}", String.valueOf(onlineStaff.size()));
-            invocation.source().sendMessage(
-                toComponent(header)
-                .append(Component.text(" "))
-                .append(toComponent("&b" + staffNames)) // Adding a default color just in case or we could add another key
-            );
+            // Conta totale
+            int total = groupedStaff.values().stream().mapToInt(List::size).sum();
+            String header = Messages.get("stafflist.header").replace("{count}", String.valueOf(total));
+            invocation.source().sendMessage(toComponent(header));
+
+            String format = Messages.get("stafflist.entry_server");
+            
+            // Ordina i server alfabeticamente
+            groupedStaff.keySet().stream().sorted().forEach(server -> {
+                String names = String.join(", ", groupedStaff.get(server));
+                invocation.source().sendMessage(toComponent(format
+                    .replace("{server}", server)
+                    .replace("{players}", names)
+                    .replace("{count}", String.valueOf(groupedStaff.get(server).size()))));
+            });
         }
     }
 }

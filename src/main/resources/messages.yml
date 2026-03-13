@@ -19,11 +19,12 @@ adminchat.toggle_disabled: "&c[&6AC&c]&7 StaffChat &cdisabilitata&7."
 adminchat.reloaded: "&aConfigurazione ricaricata con successo!"
 
 # Quick message format (used for /a <message> and when broadcasting from toggled players)
-staff_message_format: " &3STAFF &b▐&3{sender} &b{message}"
+staff_message_format: " &5[{server}] &3STAFF &b▐&3{sender} &b{message}"
 
 # Staff list
-stafflist.none: "&cNessun membro dello staff è attualmente online."
-stafflist.header: "&aStaff online (&e{count}&a):"
+stafflist.none: "&c[&6AC&c]&7 Nessun membro dello staff è online"
+stafflist.header: "&c[&6AC&c] &7Staff &aonline &7(&a{count}&7):"
+stafflist.entry_server: "&c&l{server} &c[&a{count}&c] | &6{players}"
 
 # Notifications
 staff_notify_join: "&c[&6AC&c]&b {player} &7è &aentrato &7nel server"

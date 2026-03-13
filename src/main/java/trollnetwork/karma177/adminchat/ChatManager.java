@@ -6,6 +6,7 @@ import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 
 import java.util.Set;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
@@ -27,11 +28,12 @@ public class ChatManager {
         return LegacyComponentSerializer.legacyAmpersand().deserialize(message);
     }
 
-    public static Component formatStaffMessage(String sender, String message) {
-        String senderName = (sender != null) ? sender : "CONSOLE";
+    public static Component formatStaffMessage(Player sender, String serverName, String message) {
+        String senderName = (sender != null) ? sender.getUsername() : "CONSOLE";
         String format = Messages.get("staff_message_format");
         return toComponent(format
             .replace("{sender}", senderName)
+            .replace("{server}", serverName)
             .replace("{message}", message));
     }
 
@@ -83,6 +85,20 @@ public class ChatManager {
             .collect(Collectors.toList());
     }
 
+    /**
+     * Ritorna una lista contenente i nomi dei membri dello staff raggruppati per server.
+     */
+    public Map<String, List<String>> getStaffGroupedByServer() {
+        cacheUpdate();
+        return staffCache.stream()
+            .collect(Collectors.groupingBy(
+                player -> player.getCurrentServer()
+                            .map(server -> server.getServerInfo().getName())
+                            .orElse("Unknown"),
+                Collectors.mapping(Player::getUsername, Collectors.toList())
+            ));
+    }
+    
     public boolean toggleChat(Player player) {
         if (isToggled(player)) {
             toggledPlayers.remove(player);

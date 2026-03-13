@@ -109,7 +109,8 @@ public class AdminChat {
         // Se il giocatore ha l'admin chat togglata e ha il permesso
         if (PermissionChecker.hasStaffChatPermission(player) && chatManager.hasChatEnabled(player) && chatManager.isToggled(player)) {
             event.setResult(PlayerChatEvent.ChatResult.denied()); // Blocchiamo il messaggio originale dalla chat pubblica
-            Component formattedMsg = ChatManager.formatStaffMessage(player.getUsername(), event.getMessage()); 
+            String serverName = player.getCurrentServer().map(server -> server.getServerInfo().getName()).orElse("Unknown");
+            Component formattedMsg = ChatManager.formatStaffMessage(player, serverName, event.getMessage()); 
             chatManager.broadcastStaffMessage(formattedMsg); // E lo inoltriamo allo staff 
         }
     }

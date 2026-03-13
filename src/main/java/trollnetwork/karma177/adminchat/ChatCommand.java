@@ -166,12 +166,15 @@ public class ChatCommand implements SimpleCommand {
             return;
         }
 
-        if(source instanceof Player && !chatManager.hasChatEnabled((Player) source)) {
+        Player player = (source instanceof Player) ? (Player) source : null;
+        
+        if(player != null && !chatManager.hasChatEnabled(player)) {
             source.sendMessage(toComponent(Messages.get("adminchat.message_when_incoming_disabled"))); 
             return;
         }
 
-        Component formattedMsg = ChatManager.formatStaffMessage(senderName, message);
+        String serverName = (player != null) ? player.getCurrentServer().map(server -> server.getServerInfo().getName()).orElse("Unknown") : "Proxy";
+        Component formattedMsg = ChatManager.formatStaffMessage(player, serverName, message);
         chatManager.broadcastStaffMessage(formattedMsg);
     }
 
