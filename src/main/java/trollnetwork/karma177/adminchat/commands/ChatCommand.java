@@ -11,7 +11,6 @@ import com.velocitypowered.api.proxy.Player;
 import java.util.List;
 import java.util.ArrayList;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 
 public class ChatCommand implements SimpleCommand {
@@ -85,7 +84,7 @@ public class ChatCommand implements SimpleCommand {
                                     source.sendMessage(toComponent(Messages.get("no_permission")));
                             }
                             case "version" -> {
-                                source.sendMessage(Component.text(this.plugin.getDescription(), NamedTextColor.GRAY));
+                                source.sendMessage(toComponent(this.plugin.getDescription()));
                             }
                             case "help" -> {
                                 sendHelp(source, invocation);

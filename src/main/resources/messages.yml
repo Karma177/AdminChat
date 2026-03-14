@@ -20,6 +20,7 @@ adminchat.reloaded: "&aConfigurazione ricaricata con successo!"
 
 # Quick message format (used for /a <message> and when broadcasting from toggled players)
 staff_message_format: " &5[{server}] &3STAFF &b▐&3{sender} &b{message}"
+staff_message_format_console: " &3STAFF &b▐&3CONSOLE &b{message}"
 
 # Staff list
 stafflist.none: "&c[&6AC&c]&7 Nessun membro dello staff è online"

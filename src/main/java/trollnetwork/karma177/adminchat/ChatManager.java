@@ -42,7 +42,8 @@ public class ChatManager {
 
     public static Component formatStaffMessage(Player sender, String serverName, String message) {
         String senderName = (sender != null) ? sender.getUsername() : "CONSOLE";
-        String format = Messages.get("staff_message_format");
+        String format = (senderName.equals("CONSOLE")) ? Messages.get("staff_message_format_console") : Messages.get("staff_message_format");
+
         return toComponent(format
             .replace("{sender}", senderName)
             .replace("{server}", serverName)

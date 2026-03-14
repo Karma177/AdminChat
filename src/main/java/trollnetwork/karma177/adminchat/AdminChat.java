@@ -136,6 +136,6 @@ public class AdminChat {
     }
 
     public String getDescription() {
-        return "Made by Karma177. Version: "+this.version;
+        return "&c[&6AC&c] &7Made by &b@Karma177&7 on GitHub. Version: &b"+this.version+"&7.";
     }
 }
