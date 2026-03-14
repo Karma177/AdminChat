@@ -1,4 +1,8 @@
-package trollnetwork.karma177.adminchat;
+package trollnetwork.karma177.adminchat.commands;
+
+import trollnetwork.karma177.adminchat.ChatManager;
+import trollnetwork.karma177.adminchat.utils.Messages;
+import trollnetwork.karma177.adminchat.utils.PermissionChecker;
 
 import com.velocitypowered.api.command.SimpleCommand;
 import net.kyori.adventure.text.Component;

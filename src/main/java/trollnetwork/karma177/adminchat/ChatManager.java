@@ -1,5 +1,7 @@
 package trollnetwork.karma177.adminchat;
 
+import trollnetwork.karma177.adminchat.utils.Messages;
+import trollnetwork.karma177.adminchat.utils.PermissionChecker;
 import com.velocitypowered.api.proxy.Player;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
@@ -26,6 +28,16 @@ public class ChatManager {
 
     private static Component toComponent(String message) {
         return LegacyComponentSerializer.legacyAmpersand().deserialize(message);
+    }
+    
+    public static String getServerName(Player player) {
+        return player.getCurrentServer()
+            .map(server -> {
+                String name = server.getServerInfo().getName();
+                if (name.isEmpty()) return name;
+                return name.substring(0, 1).toUpperCase() + name.substring(1).toLowerCase();
+            })
+            .orElse("Unknown");
     }
 
     public static Component formatStaffMessage(Player sender, String serverName, String message) {
@@ -92,9 +104,7 @@ public class ChatManager {
         cacheUpdate();
         return staffCache.stream()
             .collect(Collectors.groupingBy(
-                player -> player.getCurrentServer()
-                            .map(server -> server.getServerInfo().getName())
-                            .orElse("Unknown"),
+                player -> getServerName(player),
                 Collectors.mapping(Player::getUsername, Collectors.toList())
             ));
     }

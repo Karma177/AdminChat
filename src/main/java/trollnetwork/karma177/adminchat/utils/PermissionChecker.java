@@ -1,4 +1,4 @@
-package trollnetwork.karma177.adminchat;
+package trollnetwork.karma177.adminchat.utils;
 
 import com.velocitypowered.api.command.SimpleCommand.Invocation;
 import com.velocitypowered.api.proxy.Player;

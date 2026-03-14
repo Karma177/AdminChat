@@ -1,5 +1,10 @@
 package trollnetwork.karma177.adminchat;
 
+import trollnetwork.karma177.adminchat.commands.ChatCommand;
+import trollnetwork.karma177.adminchat.commands.StaffListCommand;
+import trollnetwork.karma177.adminchat.utils.Messages;
+import trollnetwork.karma177.adminchat.utils.PermissionChecker;
+
 import com.google.inject.Inject;
 import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.connection.DisconnectEvent;
@@ -19,13 +24,13 @@ import com.velocitypowered.api.command.CommandMeta;
 @Plugin(
         id = "adminchat",
         name = "AdminChat",
-        version = "1.1-SNAPSHOT",
+        version = "1.1-STABLE",
         description = "Velocity Admin Chat Plugin",
         authors = {"Karma177"}
 )
 public class AdminChat {
 
-    private String version = "1.0-SNAPSHOT";
+    private String version = "1.1-STABLE";
     private final ProxyServer server;
     private final Logger logger;
     private final ChatManager chatManager;
@@ -109,11 +114,13 @@ public class AdminChat {
         // Se il giocatore ha l'admin chat togglata e ha il permesso
         if (PermissionChecker.hasStaffChatPermission(player) && chatManager.hasChatEnabled(player) && chatManager.isToggled(player)) {
             event.setResult(PlayerChatEvent.ChatResult.denied()); // Blocchiamo il messaggio originale dalla chat pubblica
-            String serverName = player.getCurrentServer().map(server -> server.getServerInfo().getName()).orElse("Unknown");
+            String serverName = ChatManager.getServerName(player);
             Component formattedMsg = ChatManager.formatStaffMessage(player, serverName, event.getMessage()); 
             chatManager.broadcastStaffMessage(formattedMsg); // E lo inoltriamo allo staff 
         }
     }
+
+
 
     public void reloadMessages() {
         Messages.init(dataDirectory.toString()+"/messages.yml", this);

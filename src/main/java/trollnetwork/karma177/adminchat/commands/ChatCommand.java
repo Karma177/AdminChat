@@ -1,4 +1,9 @@
-package trollnetwork.karma177.adminchat;
+package trollnetwork.karma177.adminchat.commands;
+
+import trollnetwork.karma177.adminchat.AdminChat;
+import trollnetwork.karma177.adminchat.ChatManager;
+import trollnetwork.karma177.adminchat.utils.Messages;
+import trollnetwork.karma177.adminchat.utils.PermissionChecker;
 
 import com.velocitypowered.api.command.SimpleCommand;
 import com.velocitypowered.api.command.CommandSource;
@@ -173,7 +178,7 @@ public class ChatCommand implements SimpleCommand {
             return;
         }
 
-        String serverName = (player != null) ? player.getCurrentServer().map(server -> server.getServerInfo().getName()).orElse("Unknown") : "Proxy";
+        String serverName = (player != null) ? ChatManager.getServerName(player) : "Proxy";
         Component formattedMsg = ChatManager.formatStaffMessage(player, serverName, message);
         chatManager.broadcastStaffMessage(formattedMsg);
     }

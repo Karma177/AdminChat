@@ -1,5 +1,6 @@
-package trollnetwork.karma177.adminchat;
+package trollnetwork.karma177.adminchat.utils;
 
+import trollnetwork.karma177.adminchat.AdminChat;
 import org.yaml.snakeyaml.Yaml;
 
 import java.io.File;
