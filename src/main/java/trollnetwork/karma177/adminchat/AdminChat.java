@@ -11,6 +11,7 @@ import com.velocitypowered.api.event.connection.DisconnectEvent;
 import com.velocitypowered.api.event.connection.PostLoginEvent;
 import com.velocitypowered.api.event.player.PlayerChatEvent;
 import com.velocitypowered.api.event.proxy.ProxyInitializeEvent;
+import com.velocitypowered.api.event.proxy.ProxyReloadEvent;
 import com.velocitypowered.api.plugin.Plugin;
 import net.kyori.adventure.text.Component;
 import org.slf4j.Logger;
@@ -24,13 +25,13 @@ import com.velocitypowered.api.command.CommandMeta;
 @Plugin(
         id = "adminchat",
         name = "AdminChat",
-        version = "1.1-STABLE",
+        version = "1.2-STABLE",
         description = "Velocity Admin Chat Plugin",
         authors = {"Karma177"}
 )
 public class AdminChat {
 
-    private String version = "1.1-STABLE";
+    private String version = "1.2-STABLE";
     private final ProxyServer server;
     private final Logger logger;
     private final ChatManager chatManager;
@@ -120,7 +121,13 @@ public class AdminChat {
         }
     }
 
-
+    @Subscribe
+    public void onProxyReload(ProxyReloadEvent event) {
+        this.logger.info("Ricaricamento di AdminChat in corso...");
+        this.reloadMessages();
+        this.chatManager.cacheUpdate();
+        this.logger.info("Ricaricamento completato.");
+    }
 
     public void reloadMessages() {
         Messages.init(dataDirectory.toString()+"/messages.yml", this);
